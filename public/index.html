@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+        <title>Location de voiture de particulier à particulier</title>
+    </head>
+
+    <body>
+ 	<main id="app">
+
+        <section v-if="currentPage === 'accueil'" id="accueil">
+        <head><h1>Location de voiture </br>de particulier à particulier</h1></head>
+
+
+		<p>Ce site a pour but de rentabiliser la non-utilisation de votre voiture lors d'une durée supérieure ou égale à une semaine. Que vous soyez partis en vacance, ou simplement que vous souhaitiez prêter votre voiture à un ami, n'hésitez plus. Cette application vous permettra de gagner de l'argent pendant vos vacances. A l'inverse, si vous chercher un véhicule afin de partir en vacance tout en payant moins cher que le train ou l'avion, cette méthode est faite pour vous !  </p>
+	  </section>
+
+	    <section v-else-if="currentPage === 'Liste utilisateur'" id="Liste utilisateur">
+          <li v-for="user in List">  {{ user.name }}  {{ user.mail }}
+          </li>
+        </section>
+
+	  	<section v-else-if="currentPage === 'Louer une voiture'" id="Louer une voiture">
+        <li v-for="item in myListmercedes"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+            <button v-on:click="currentPage = 'Louer'">Louer mon véhicule</button>
+            </li>
+        <li v-for="item in myList"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+            <button v-on:click="currentPage = 'Louer'">Louer mon véhicule</button>
+            </li>
+        <li v-for="item in myListbmw"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+            <button v-on:click="currentPage = 'Louer'">Louer mon véhicule</button>
+            </li>
+        <li v-for="item in myListaudi"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+            <button v-on:click="currentPage = 'Louer'">Louer mon véhicule</button>
+            </li>
+      	<head><h1>Location</h1></head>
+
+	  </section>
+
+
+    <section v-else-if="currentPage === 'Louer'" id="Louer" >
+        <p> vous souhaitez louer cette voiture durant quelle période ? </p>
+        <input type="date" v-model="newitem.date_debut">
+        <input type="date" v-model="newitem.date_fin">
+        <button v-on:click="deleteitem(index)">Valider</button>
+
+      </section>
+
+
+	  	<section v-else-if="currentPage === 'Prêter sa voiture'" id="Prêter sa voiture" >
+
+          <img v-on:click="currentPage = 'mercedes'" src="/stylesheets/mercedes.png" alt="mercedes" width="220" height="220" class="images">
+          <img v-on:click="currentPage = 'renault'" src="/stylesheets/renault.png" alt="renault" width="220" height="220" class="images">
+          <br />
+          <img v-on:click="currentPage = 'citroen'" src="/stylesheets/citroen.png" alt="citroen" width="220" height="220" class="images">
+          <img v-on:click="currentPage = 'bmw'" src="/stylesheets/bmw.png" alt="bmw" width="220" height="220" class="images">
+
+		</section>
+
+
+
+            <section v-if="currentPage === 'renault'" id="renault" class="model">
+          <ul>
+            <li v-for="item in myList"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+                <button v-on:click="deleteitem(index)">Supprimer mon véhicule</button>
+                </li>
+            </li>
+          </ul>
+          <input type="text" v-model="newitem.name">
+          <input type="date" v-model="newitem.date_debut">
+          <input type="date" v-model="newitem.date_fin">
+          <input type="text" v-model="newitem.description">
+          <br />
+          <button v-on:click="additem2()">Ajouter un véhicule !</button>
+        </section>
+
+
+
+
+        		 <section v-if="currentPage === 'citroen'" id="citroen" class="model">
+          <ul>
+            <li v-for="item in myListaudi"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+                <button v-on:click="deleteitemaudi(index)">Supprimer mon véhicule</button>
+                </li>
+            </li>
+          </ul>
+          <input type="text" v-model="newitem.name">
+          <input type="date" v-model="newitem.date_debut">
+          <input type="date" v-model="newitem.date_fin">
+          <input type="text" v-model="newitem.description">
+          <br />
+          <button v-on:click="additem5()">Ajouter un véhicule !</button>
+        </section>
+
+
+
+
+		        <section v-if="currentPage === 'bmw'" id="bmw" class="model">
+          <ul>
+            <li v-for="item in myListbmw"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+                <button v-on:click="deleteitembmw(index)">Supprimer mon véhicule</button>
+                </li>
+            </li>
+          </ul>
+          <input type="text" v-model="newitem.name">
+          <input type="date" v-model="newitem.date_debut">
+          <input type="date" v-model="newitem.date_fin">
+          <input type="text" v-model="newitem.description">
+          <br />
+          <button v-on:click="additem3()">Ajouter un véhicule !</button>
+        </section>
+
+
+
+
+
+		        <section v-if="currentPage === 'mercedes'" id="mercedes" class="model">
+          <ul>
+            <li v-for="item in myListmercedes"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
+                <button v-on:click="deleteitemmercedes(index)">Supprimer mon véhicule</button>
+                </li>
+            </li>
+          </ul>
+          <input type="text" v-model="newitem.name">
+          <input type="date" v-model="newitem.date_debut">
+          <input type="date" v-model="newitem.date_fin">
+          <input type="text" v-model="newitem.description">
+          <br />
+          <button v-on:click="additem4()">Ajouter un véhicule !</button>
+        </section>
+
+
+
+
+
+        <section v-if="currentPage === 'inscription'" id="inscription" class="form">
+
+          <input type='text' v-model="newuser.name" placeholder="nom d'utilisateur" required>
+          <input type='password' v-model="newuser.password" placeholder="mot de passe" required>
+          <input type='password' v-model="newuser.password2" placeholder="confirmation mot de passe" required>
+          <input type='text' v-model="newuser.mail" placeholder="adresse mail"/>
+          <div v-if='newuser.password2 === newuser.password'>
+          <button v-on:click="addnewuser()">validation</button>
+          </div>
+        </section>
+
+
+
+        <section v-else-if="currentPage === 'login'" id="login" class="form">
+
+          <input type= "text" v-model="newuser.name" placeholder="nom d'utilisateur"/>
+          <input type= "password" v-model="newuser.password" placeholder="mot de passe"/>
+
+          <button v-on:click="chekuser(List)">validation</button>
+        </section>
+
+
+
+
+	<div id="log">
+		<nav>
+			<ul id="logbutton">
+				<div v-on:click="currentPage = 'login'"><h2>Login</h2></div>
+				<div v-on:click="currentPage = 'inscription'"><h2>Inscription</h2></div>
+			</ul>
+	</nav>
+	</div>
+
+
+
+
+    <div id="conteneur">
+   <nav>
+   <ul id=menu>
+	<div v-on:click="currentPage = 'accueil'"><h2>Accueil</h2></div>
+	<div v-on:click="currentPage = 'Louer une voiture'"><h2>Louer une voiture</h2></div>
+	<div v-on:click="currentPage = 'Prêter sa voiture'"><h2>Prêter sa voiture</h2></div>
+  <div v-on:click="currentPage = 'Liste utilisateur'"><h2>Liste utilisateur</h2></div>
+
+   </ul>
+</nav>
+	</div>
+
+    </main>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
