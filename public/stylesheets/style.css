@@ -15,8 +15,8 @@
   position: fixed;
   left: 0;
   top: 50%;
-  width: 8em;
-  margin-top: -8.5em;
+  width: 9em;
+  margin-top: -15.5em;
   color: black;
   border: 2px solid black;
 }
@@ -122,7 +122,7 @@ h2:hover{
 	position: relative;
     z-index: 1;
     background: white;
-    max-width: 360px;
+    max-width: 400px;
     margin: 180px auto 300px;
     padding: 45px;
     text-align: center;
