@@ -24,6 +24,7 @@
         </section>
 
 	  	<section v-else-if="currentPage === 'Louer une voiture'" id="Louer une voiture" class="model">
+        <head><h1>Location</h1></head>
         <li v-for="item in myListmercedes"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
             <button v-on:click="currentPage = 'Louer'">Louer mon véhicule</button>
             </li>
@@ -36,7 +37,7 @@
         <li v-for="item in myListaudi"> {{ item.name }}   {{ item.date_debut }}  {{ item.date_fin }} {{ item.description }}
             <button v-on:click="currentPage = 'Louer'">Louer mon véhicule</button>
             </li>
-      	<head><h1>Location</h1></head>
+      	
 
 	  </section>
 
